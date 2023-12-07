@@ -1,0 +1,30 @@
+
+#app{
+    margin-top: 100px;
+    width: 800px;
+    height:69vh;
+}
+.btnDiet{
+    padding: 8px 10px;
+    border: none;
+    border-radius: 3px;
+    color: #FB6356;
+    background-color: white;
+    font-weight: bold;
+    align-self: center;
+}
+
+.hiddenBanner{
+    display: none;
+}
+.showApp{
+    display: block;
+}
+
+.hiddenApp{
+    display: none;
+}
+
+.shadowBanner{
+    display: block;
+}
