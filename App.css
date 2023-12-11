@@ -1,4 +1,43 @@
-.hola{
-    color: green;
-    z-index: 4;
+h5{
+    margin-bottom: 15px;
+    color: #FB5849;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #FB5849;
+    border-radius: 10px;
+    padding: 30px 50px;
+}
+
+input {
+    width: 200px;
+}
+
+label{
+    width: 200px;
+    font-weight: bold;
+    
+}
+
+input{
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+input[type="submit"]{
+    margin-top: 15px;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 25px;
+    background-color: #FB5849;
+    color: white;
+}
+
+input[type="text"], input[type="number"]{
+    border: 1px solid #FB5849;
+    outline: none;
 }

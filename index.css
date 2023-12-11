@@ -1,8 +1,11 @@
 
 #app{
+    display: flex;
     margin-top: 100px;
-    width: 800px;
     height:69vh;
+    justify-content: center;
+    align-items: center;
+    
 }
 .btnDiet{
     padding: 8px 10px;
