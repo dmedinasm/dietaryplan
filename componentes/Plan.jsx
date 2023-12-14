@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/Context'
+import Meal from './Meal'
 
 const Plan = () => {
   const {peso} = useContext(Context)
   const {altura} = useContext(Context)
   const [mealsId, setMealsID] = useState([]) 
+  const[mealsRendered, setMealsRendered] = useState([])
   const IMC = (peso)/(altura/100)**2
 
   const planResult = async () => {
@@ -36,8 +38,8 @@ const Plan = () => {
             },
             "fit": {
               "ENERC_KCAL": {
-                "min": 1800,
-                "max": 2200
+                "min": 800,
+                "max": 1000
               },
               "PROCNT": {
                 "min": 50,
@@ -73,17 +75,23 @@ const Plan = () => {
     }
   };
 
-  /*fetch("https://api.edamam.com/api/recipes/v2/recipe_ed2c810d10f2885d36a49962322a4719?type=public&app_id=9d99e507&app_key=850a7beca18dac6cb0c218b070703d84", {
-    method: "GET",
-    headers: {
-      "Accept": "application/json",
-      "Edamam-Account-User": "dmedinas",
-      "Accept-Language": "en"
+  const mealsData = async (id) => {
+    try {
+      const response = await fetch(`https://api.edamam.com/api/recipes/v2/${id}?type=public&app_id=9d99e507&app_key=850a7beca18dac6cb0c218b070703d84`, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+          "Edamam-Account-User": "dmedinas",
+          "Accept-Language": "en"
+        }
+      })
+      const data = await response.json()
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
     }
-  })
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch((error) => console.error('Error:', error));*/
+  }
+
   useEffect(() =>{
     planResult().then(data => {
       console.log(data)
@@ -94,14 +102,44 @@ const Plan = () => {
       const dinner = valor.sections.Dinner.assigned.split("#")[1]
       return [breakfast, lunch, dinner]
     })
-    setMealsID(mealsRecipeID)
+    setMealsID(mealsId => mealsId.concat(...mealsRecipeID))
   })
   },[])
-  
 console.log(mealsId)
+  /*useEffect(() =>{
+    mealsId.forEach(valor => {
+      mealsData(valor).then(data => {
+        setMealsRendered(mealsRendered => [...mealsRendered, data]);
+      });
+    });
+    
+  },[mealsId])*/
+  //Array de promesas paraque lleguen en orden
+  useEffect(() => {
+    Promise.all(mealsId.map(mealsData))
+      .then(dataArray => setMealsRendered(dataArray));
+  }, [mealsId]);
+  
+console.log(mealsRendered)
   return (
     <>
-       <div></div>
+    {mealsRendered.length > 0 &&
+        <div className="containerPlan">
+         {mealsRendered.map(valor => 
+           <Meal
+             key={valor.recipe.label}
+             title={valor.recipe.label}
+             image={valor.recipe.images.SMALL.url}
+             kcal ={Math.floor(valor.recipe.totalNutrients.ENERC_KCAL.quantity)}
+             carb = {Math.floor(valor.recipe.totalNutrients.CHOCDF.quantity)}
+             fat = {Math.floor(valor.recipe.totalNutrients.FAT.quantity)}
+             protein = {Math.floor(valor.recipe.totalNutrients.PROCNT.quantity)}
+           />
+         )
+         }
+        </div>
+    }
+      
     </>
   )
 }

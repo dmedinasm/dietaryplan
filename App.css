@@ -41,3 +41,51 @@ input[type="text"], input[type="number"]{
     border: 1px solid #FB5849;
     outline: none;
 }
+
+.card{
+    width: 18em;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+.containerPlan{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.nutList li::before {
+    content: "•"; /* Esto agrega un nuevo 'punto' antes de cada elemento <li> */
+    color: red; /* Cambia 'red' al color que prefieras */
+    display: inline-block; /* Esto es necesario para agregar un espacio después del 'punto' */
+    width: 1em; /* Esto controla el espacio después del 'punto' */
+    margin-left: -1em; /* Esto mueve el 'punto' a la izquierda para alinearlo con los puntos originales */
+  }
+
+  .nutrition{
+    display: flex;
+    justify-content: space-between;
+   
+  }
+
+  .cardTitle{
+    color: #FB5849;
+    font-weight: bold;
+    text-align: center;
+    height: 60px;
+  }
+
+  .text-secondary{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.5em;
+  }
+
+  .nutQuantity{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
