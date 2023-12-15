@@ -20,7 +20,7 @@ const Plan = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          "size": 2,
+          "size": 7,
           "plan": {
             "accept": {
               "all": [
@@ -92,28 +92,20 @@ const Plan = () => {
     }
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     planResult().then(data => {
       console.log(data)
 
-    const mealsRecipeID = data.selection.map(valor => {
-      const breakfast = valor.sections.Breakfast.assigned.split("#")[1]
-      const lunch = valor.sections.Lunch.assigned.split("#")[1]
-      const dinner = valor.sections.Dinner.assigned.split("#")[1]
-      return [breakfast, lunch, dinner]
+      const mealsRecipeID = data.selection.map(valor => {
+        const breakfast = valor.sections.Breakfast.assigned.split("#")[1]
+        const lunch = valor.sections.Lunch.assigned.split("#")[1]
+        const dinner = valor.sections.Dinner.assigned.split("#")[1]
+        return [breakfast, lunch, dinner]
+      })
+      setMealsID(mealsId => mealsId.concat(...mealsRecipeID))
     })
-    setMealsID(mealsId => mealsId.concat(...mealsRecipeID))
-  })
-  },[])
+  }, [])
 console.log(mealsId)
-  /*useEffect(() =>{
-    mealsId.forEach(valor => {
-      mealsData(valor).then(data => {
-        setMealsRendered(mealsRendered => [...mealsRendered, data]);
-      });
-    });
-    
-  },[mealsId])*/
   //Array de promesas paraque lleguen en orden
   useEffect(() => {
     Promise.all(mealsId.map(mealsData))
@@ -123,23 +115,40 @@ console.log(mealsId)
 console.log(mealsRendered)
   return (
     <>
-    {mealsRendered.length > 0 &&
-        <div className="containerPlan">
-         {mealsRendered.map(valor => 
-           <Meal
-             key={valor.recipe.label}
-             title={valor.recipe.label}
-             image={valor.recipe.images.SMALL.url}
-             kcal ={Math.floor(valor.recipe.totalNutrients.ENERC_KCAL.quantity)}
-             carb = {Math.floor(valor.recipe.totalNutrients.CHOCDF.quantity)}
-             fat = {Math.floor(valor.recipe.totalNutrients.FAT.quantity)}
-             protein = {Math.floor(valor.recipe.totalNutrients.PROCNT.quantity)}
-           />
-         )
-         }
-        </div>
-    }
-      
+
+      {mealsRendered.length > 0 &&
+        <div>
+          <h1 className="titlePlan">7 days Diet Plan</h1>
+          <div className="containerPlan">
+            <div className="labelBr">Breakfast</div>
+            <div className="labelLunch">Lunch</div>
+            <div className="labelDinner">Dinner</div>
+            <div className="iconBr"><img src="./assets/images/tab-icon-02.png" alt="iconBr" /></div>
+            <div className="iconLunch"><img src="./assets/images/tab-icon-01.png" alt="iconLunch" /></div>
+            <div className="iconDinner"><img src="./assets/images/tab-icon-03.png" alt="iconDinner" /></div>
+
+            {mealsRendered.map((valor, i) =>
+              <div className="containerMeal">
+                {/*i === 0 || i % 3 === 0
+               ?
+               <div className="dayPlan">Day { i === 0 ? i+1 : (i / 3) + 1}</div>
+               : null
+         */}
+                <Meal
+                  key={valor.recipe.label}
+                  title={valor.recipe.label}
+                  image={valor.recipe.images.SMALL.url}
+                  kcal={Math.floor(valor.recipe.totalNutrients.ENERC_KCAL.quantity)}
+                  carb={Math.floor(valor.recipe.totalNutrients.CHOCDF.quantity)}
+                  fat={Math.floor(valor.recipe.totalNutrients.FAT.quantity)}
+                  protein={Math.floor(valor.recipe.totalNutrients.PROCNT.quantity)}
+                />
+              </div>
+            )
+            }
+          </div>
+        </div>}
+
     </>
   )
 }
