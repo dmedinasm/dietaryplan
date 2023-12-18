@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/Context'
 import Meal from './Meal'
+import { useNavigate } from 'react-router-dom'
 
 const Plan = () => {
   const {peso} = useContext(Context)
   const {altura} = useContext(Context)
   const [mealsId, setMealsID] = useState([]) 
   const[mealsRendered, setMealsRendered] = useState([])
+  const navigation = useNavigate()
   const IMC = (peso)/(altura/100)**2
 
   const planResult = async () => {
@@ -128,12 +130,7 @@ console.log(mealsRendered)
             <div className="iconDinner"><img src="./assets/images/tab-icon-03.png" alt="iconDinner" /></div>
 
             {mealsRendered.map((valor, i) =>
-              <div className="containerMeal">
-                {/*i === 0 || i % 3 === 0
-               ?
-               <div className="dayPlan">Day { i === 0 ? i+1 : (i / 3) + 1}</div>
-               : null
-         */}
+       
                 <Meal
                   key={valor.recipe.label}
                   title={valor.recipe.label}
@@ -143,10 +140,13 @@ console.log(mealsRendered)
                   fat={Math.floor(valor.recipe.totalNutrients.FAT.quantity)}
                   protein={Math.floor(valor.recipe.totalNutrients.PROCNT.quantity)}
                 />
-              </div>
             )
             }
           </div>
+          <div className="btNewPlan">
+          <button  onClick={() => navigation("/")} >Get New Diet Plan!</button>
+          </div>
+          
         </div>}
 
     </>

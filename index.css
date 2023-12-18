@@ -2,10 +2,9 @@
 #app{
     display: flex;
     margin-top: 100px;
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     justify-content: center;
     align-items: center;
-    
 }
 .btnDiet{
     padding: 8px 10px;
@@ -24,7 +23,7 @@
     display: block;
 }
 
-.hiddenApp{
+#app.hiddenApp{
     display: none;
 }
 
