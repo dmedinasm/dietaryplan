@@ -24,7 +24,7 @@ const handleSubmit = (e) =>{
           <input type="number" id="weight"></input>
         </div>
         <div>
-          <label  htmlFor="height">height(m):</label>
+          <label  htmlFor="height">height(cm):</label>
           <input type="number" id="height"></input>
         </div>
         <div>

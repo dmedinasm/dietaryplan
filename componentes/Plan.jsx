@@ -6,11 +6,53 @@ import { useNavigate } from 'react-router-dom'
 const Plan = () => {
   const {peso} = useContext(Context)
   const {altura} = useContext(Context)
+  const [kcal, setKcal] = useState()
+  const [kcalBreakfast, setKcalBreakfast] = useState()
+  const [kcalLunch, setKcalLunch] = useState()
+  const [kcalDinner, setKcalDinner] = useState()
   const [mealsId, setMealsID] = useState([]) 
   const[mealsRendered, setMealsRendered] = useState([])
   const navigation = useNavigate()
   const IMC = (peso)/(altura/100)**2
+ 
+  useEffect(() =>{
+    if (IMC < 18.5) {
+      setKcal({...kcal,min : 1800, max : 2000})
+      setKcalBreakfast({min:540, max:600})
+      setKcalLunch({min:720, max:800})
+      setKcalDinner({min:360, max:400})
+    }else if(IMC >= 18.5 && IMC < 25){
+      setKcal({...kcal,min : 1600,max : 1800})
+      setKcalBreakfast({min:480, max:540})
+      setKcalLunch({min:640, max:720})
+      setKcalDinner({min:320, max:360})
+    }else if(IMC >= 25 && IMC < 30){
+      setKcal({...kcal,min : 1400,max : 1600})
+      setKcalBreakfast({min:420, max:480})
+      setKcalLunch({min:560, max:640})
+      setKcalDinner({min:280, max:320})
+    }else if(IMC >= 30 && IMC < 35){
+      setKcal({...kcal,min : 1200,max : 1400})
+      setKcalBreakfast({min:360, max:420})
+      setKcalLunch({min:480, max:560})
+      setKcalDinner({min:240, max:280})
+    }else if(IMC >= 35 && IMC < 40){
+      setKcal({...kcal,min : 1000,max : 1200})
+      setKcalBreakfast({min:300, max:360})
+      setKcalLunch({min:400, max:480})
+      setKcalDinner({min:200, max:240})
+    }else{
+      setKcal({...kcal,min : 800,max : 1000})
+      setKcalBreakfast({min:240, max:300})
+      setKcalLunch({min:320, max:400})
+      setKcalDinner({min:160, max:200})
+    }
+  },[])
 
+ console.log(kcal) 
+ console.log(kcalBreakfast)
+ console.log(kcalLunch)
+ console.log(kcalDinner)
   const planResult = async () => {
     try {
       const response = await fetch('https://api.edamam.com/api/meal-planner/v1/9d99e507/select', {
@@ -25,32 +67,24 @@ const Plan = () => {
           "size": 7,
           "plan": {
             "accept": {
-              "all": [
-                {
-                  "health": [
-                    "VEGAN"
-                  ]
-                },
-                {
-                  "cuisine": [
-                    "Mediterranean"
-                  ]
-                }
-              ]
+              "all": [ ]
             },
             "fit": {
-              "ENERC_KCAL": {
-                "min": 800,
-                "max": 1000
-              },
-              "PROCNT": {
-                "min": 50,
-                "max": 300
-              }
+              "ENERC_KCAL": kcal
             },
             "sections": {
-              "Breakfast": {},
+              "Breakfast": {"fit":{
+                "ENERC_KCAL": {
+                 kcalBreakfast
+                }
+              }},
               "Lunch": {
+                "fit":{ 
+                  "ENERC_KCAL": {
+                   kcalLunch
+                  }
+                },
+                  
                 "exclude": [
                   "http://www.edamam.com/ontologies/edamam.owl#recipe_x",
                   "http://www.edamam.com/ontologies/edamam.owl#recipe_y",
@@ -59,6 +93,11 @@ const Plan = () => {
 
               },
               "Dinner": {
+                "fit":{ 
+                  "ENERC_KCAL": {
+                    kcalDinner
+                  }
+                },
                 "exclude": [
                   "http://www.edamam.com/ontologies/edamam.owl#recipe_a",
                   "http://www.edamam.com/ontologies/edamam.owl#recipe_b",
