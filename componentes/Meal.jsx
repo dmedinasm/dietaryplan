@@ -1,13 +1,15 @@
 import React from 'react'
 
 const Meal = ({title, image,kcal,carb,fat,protein}) => {
+  const serving =  (carb + fat + protein)/100
   return (
     <>
       <div className="card" >
         <img className="card-img-top" src={image} alt="Card image cap" />
         <div className="card-body">
           <div className="cardTitle">{title}</div>
-          <h2 className="text-secondary">{kcal} kcal</h2>
+          <h2 className="text-secondary">{Math.floor(kcal / serving)} kcal</h2>
+          <div className="serving">{Math.ceil(serving)} servings</div>
           <div className="nutrition">
             <ul className="nutList">
               <li>PROTEIN</li>

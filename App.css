@@ -126,4 +126,15 @@ input[type="text"], input[type="number"]{
   outline: none;
 }
 
+.serving{
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
 
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh ;
+}
