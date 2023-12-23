@@ -140,23 +140,79 @@ console.log(altura)
     <>
       <form onSubmit={handleSubmit}>
         <h5>PERSONAL INFORMATION FOR DIETARY PLAN</h5>
-        <div>
-          <label  htmlFor="weight">weigth(kg):</label>
+        <div className="mainValues">
+          <label htmlFor="weight">weigth(kg):</label>
           <input type="number" id="weight" onChange={(e) => setPeso(e.target.value)}></input>
-        </div>
-        <div>
-          <label  htmlFor="height">height(cm):</label>
+          <label htmlFor="height">height(cm):</label>
           <input type="number" id="height" onChange={(e) => setAltura(e.target.value)}></input>
         </div>
+
         <div>
-          <label htmlFor="alergic">alergic condition:</label>
-          <input type="text" id="alergic"></input>
+          <div className="dietType">
+            Diet Type:
+            (optional)
+          </div>
+          <label htmlFor="balanced">balanced</label>
+          <input type="checkbox" id="balanced" />
+          <label htmlFor="hProtein">high-protein</label>
+          <input type="checkbox" id="hProtein" />
+          <label htmlFor="hFiber">high-fiber</label>
+          <input type="checkbox" />
+          <label htmlFor="lFat">low-fat</label>
+          <input type="checkbox" id="lFat" />
+          <label htmlFor="lCarb">low-carb</label>
+          <input type="checkbox" id="lCarb" />
+          <label htmlFor="lSodium">low-sodium</label>
+          <input type="checkbox" id="lSodium" />
         </div>
         <div>
-          <label htmlFor="disease">disease:</label>
-          <input type="text" id="disease"></input>
+          <div className="dietSpecial">
+            Diet Special:
+            (optional)
+          </div>
+          <label htmlFor="lowSugar">low-sugar</label>
+          <input type="checkbox" id="balanced" />
+          <label htmlFor="sulfiteF">low-sulfite</label>
+          <input type="checkbox" id="sulfiteF" />
+          <label htmlFor="fMap">FODMAP</label>
+          <input type="checkbox" id="fMap" />
+          <label htmlFor="kosher">kosher</label>
+          <input type="checkbox" id="kosher" />
+          <label htmlFor="noOil">no-oil-added</label>
+          <input type="checkbox" id="noOil" />
         </div>
-        <input type="submit" value="Submit"/>
+        <div>
+        <div className="allergic">
+            Allergic Foods:
+          </div>
+          <label htmlFor="milk">milk-free</label>
+          <input type="checkbox" id="milk" />
+          <label htmlFor="glutenFree">gluten-free</label>
+          <input type="checkbox" id="glutenFree" />
+          <label htmlFor="eggFree">egg-free</label>
+          <input type="checkbox" id="eggFree" />
+          <label htmlFor="peanutFree">peanut-free</label>
+          <input type="checkbox" id="peanutFree" />
+          <label htmlFor="tNutFree">tree-nut-free</label>
+          <input type="checkbox" id="tNutFree" />
+          <label htmlFor="soyFree">soy-free</label>
+          <input type="checkbox" id="soyFree" />
+          <label htmlFor="fishFree">fish-free</label>
+          <input type="checkbox" id="soyFree" />
+          <label htmlFor="seaFree">seafood-free</label>
+          <input type="checkbox" id="seaFree" />
+          <label htmlFor="celeryFree">celery-free</label>
+          <input type="checkbox" id="celeryFree" />
+          <label htmlFor="celeryFree">mustard-free</label>
+          <input type="checkbox" id="celeryFree" />
+          <label htmlFor="sesameFree">sesame-free</label>
+          <input type="checkbox" id="sesameFree" />
+          <label htmlFor="lupinoFree">lupino-free</label>
+          <input type="checkbox" id="sesameFree" />
+          <label htmlFor="alcFree">alcohol-free</label>
+          <input type="checkbox" id="alcFree" />
+        </div>
+        <input type="submit" value="Submit" />
       </form>
     </>
   )
