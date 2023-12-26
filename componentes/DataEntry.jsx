@@ -1,10 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/Context'
 import {useNavigate} from 'react-router-dom'
+import { dietType, allergies } from '../data/data'
 const DataEntry = () => {
 const[peso, setPeso] = useState(0)
 const[altura, setAltura] = useState(0)
 const {setMealsID} =  useContext(Context)
+const [checkedIDDiet, setCheckedIDDiet] = useState([])
+const [checkedIDAllergies, setCheckedIDAllergies] = useState([])
+const [dietHealth, setDietHealth] = useState([])
+const[allergiesCare, setAllergiesCare] = useState([])
 const navigate = useNavigate()
 
 const planResult = async (calMin, calMax,calMinBreakfast,calMaxBreakfast,calMinLunch,calMaxLunch,calMinDinner,calMaxDinner) => {
@@ -21,7 +26,7 @@ const planResult = async (calMin, calMax,calMinBreakfast,calMaxBreakfast,calMinL
         "size": 7,
         "plan": {
           "accept": {
-            "all": [ ]
+            "all": [{"diet":dietHealth} ]
           },
           "fit": {
             "ENERC_KCAL": {
@@ -134,83 +139,78 @@ const handleSubmit = (e) =>{
   }
   navigate("/plan")
 }
+ const handleChangeDiet =  (e) =>{
+  if(e.target.checked){
+    setCheckedIDDiet([...checkedIDDiet,e.target.id])
+  }else{
+    setCheckedIDDiet(checkedIDDiet.filter(id => id != e.target.id))
+  }
+ }
+ const handleChangeAllergies =  (e) => {
+  if(e.target.checked){
+    setCheckedIDAllergies([...checkedIDAllergies,e.target.id])
+  }else{
+    setCheckedIDAllergies(checkedIDAllergies.filter(id => id != e.target.id))
+  }
+ }
+  useEffect(() => {
+    const diet = checkedIDDiet.map(val =>
+      dietType.find(payload => payload.id === val)
+    ).map(res => res.data)
+   setDietHealth(diet)
+  }, [checkedIDDiet])
+
+  useEffect(() =>{
+    const allergy = checkedIDAllergies.map(val =>
+      allergies.find(payload => payload.id === val)
+      ).map(resp => resp.data).flat()
+      setAllergiesCare(allergy)
+  },[checkedIDAllergies])
+
+
 console.log(peso)
 console.log(altura)
+console.log(checkedIDDiet)
+console.log(checkedIDAllergies)
+console.log(dietHealth)
+console.log(allergiesCare)
   return (
     <>
       <form onSubmit={handleSubmit}>
         <h5>PERSONAL INFORMATION FOR DIETARY PLAN</h5>
         <div className="mainValues">
           <label htmlFor="weight">weigth(kg):</label>
-          <input type="number" id="weight" onChange={(e) => setPeso(e.target.value)}></input>
+          <input type="number" id="weight" onChange={(e) => setPeso(e.target.value)} required></input>
           <label htmlFor="height">height(cm):</label>
-          <input type="number" id="height" onChange={(e) => setAltura(e.target.value)}></input>
+          <input type="number" id="height" onChange={(e) => setAltura(e.target.value)} required></input>
         </div>
-
+        
         <div>
           <div className="dietType">
             Diet Type:
-            (optional)
           </div>
-          <label htmlFor="balanced">balanced</label>
-          <input type="checkbox" id="balanced" />
-          <label htmlFor="hProtein">high-protein</label>
-          <input type="checkbox" id="hProtein" />
-          <label htmlFor="hFiber">high-fiber</label>
-          <input type="checkbox" />
-          <label htmlFor="lFat">low-fat</label>
-          <input type="checkbox" id="lFat" />
-          <label htmlFor="lCarb">low-carb</label>
-          <input type="checkbox" id="lCarb" />
-          <label htmlFor="lSodium">low-sodium</label>
-          <input type="checkbox" id="lSodium" />
+
+          {
+            dietType.map(value =>
+              <div key={value.id}>
+                <label htmlFor={value.id}>{value.name}</label>
+                <input type="checkbox" id={value.id} onChange={handleChangeDiet} />
+              </div>)
+          }
         </div>
+        
         <div>
           <div className="dietSpecial">
-            Diet Special:
-            (optional)
+            Allergies and Health Care:
           </div>
-          <label htmlFor="lowSugar">low-sugar</label>
-          <input type="checkbox" id="balanced" />
-          <label htmlFor="sulfiteF">low-sulfite</label>
-          <input type="checkbox" id="sulfiteF" />
-          <label htmlFor="fMap">FODMAP</label>
-          <input type="checkbox" id="fMap" />
-          <label htmlFor="kosher">kosher</label>
-          <input type="checkbox" id="kosher" />
-          <label htmlFor="noOil">no-oil-added</label>
-          <input type="checkbox" id="noOil" />
-        </div>
-        <div>
-        <div className="allergic">
-            Allergic Foods:
-          </div>
-          <label htmlFor="milk">milk-free</label>
-          <input type="checkbox" id="milk" />
-          <label htmlFor="glutenFree">gluten-free</label>
-          <input type="checkbox" id="glutenFree" />
-          <label htmlFor="eggFree">egg-free</label>
-          <input type="checkbox" id="eggFree" />
-          <label htmlFor="peanutFree">peanut-free</label>
-          <input type="checkbox" id="peanutFree" />
-          <label htmlFor="tNutFree">tree-nut-free</label>
-          <input type="checkbox" id="tNutFree" />
-          <label htmlFor="soyFree">soy-free</label>
-          <input type="checkbox" id="soyFree" />
-          <label htmlFor="fishFree">fish-free</label>
-          <input type="checkbox" id="soyFree" />
-          <label htmlFor="seaFree">seafood-free</label>
-          <input type="checkbox" id="seaFree" />
-          <label htmlFor="celeryFree">celery-free</label>
-          <input type="checkbox" id="celeryFree" />
-          <label htmlFor="celeryFree">mustard-free</label>
-          <input type="checkbox" id="celeryFree" />
-          <label htmlFor="sesameFree">sesame-free</label>
-          <input type="checkbox" id="sesameFree" />
-          <label htmlFor="lupinoFree">lupino-free</label>
-          <input type="checkbox" id="sesameFree" />
-          <label htmlFor="alcFree">alcohol-free</label>
-          <input type="checkbox" id="alcFree" />
+          {
+            allergies.map(value =>
+              <div key={value.id}>
+                <label htmlFor={value.id}>{value.name}</label>
+                <input type="checkbox" id={value.id} onChange={handleChangeAllergies} />
+              </div>
+            )
+          }
         </div>
         <input type="submit" value="Submit" />
       </form>

@@ -81,6 +81,7 @@ const Plan = () => {
                   carb={Math.floor(valor.recipe.totalNutrients.CHOCDF.quantity)}
                   fat={Math.floor(valor.recipe.totalNutrients.FAT.quantity)}
                   protein={Math.floor(valor.recipe.totalNutrients.PROCNT.quantity)}
+                  link={valor.recipe.url}
                 />
               )
             }
