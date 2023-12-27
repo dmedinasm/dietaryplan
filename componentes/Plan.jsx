@@ -3,7 +3,7 @@ import { Context } from '../context/Context'
 import Meal from './Meal'
 import { useNavigate } from 'react-router-dom'
 import { Grid } from 'react-loader-spinner'
-
+import { mealsData } from '../fetch/fetch'
 const Plan = () => {
   const { mealsId } = useContext(Context)
   const [mealsRendered, setMealsRendered] = useState([])
@@ -14,22 +14,7 @@ const Plan = () => {
   useEffect(() => {
     setMealsRendered([])
   }, [mealsId]);
-  const mealsData = async (id) => {
-    try {
-      const response = await fetch(`https://api.edamam.com/api/recipes/v2/${id}?type=public&app_id=9d99e507&app_key=850a7beca18dac6cb0c218b070703d84`, {
-        method: "GET",
-        headers: {
-          "Accept": "application/json",
-          "Edamam-Account-User": "dmedinas",
-          "Accept-Language": "en"
-        }
-      })
-      const data = await response.json()
-      return data;
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
+ 
   //Array de promesas paraque lleguen en orden
   useEffect(() => {
     Promise.all(mealsId.map(mealsData))
@@ -60,6 +45,15 @@ const Plan = () => {
              wrapperClass="grid-wrapper"
            />
          </div>
+         :
+         mealsRendered.length < 21 
+         ?
+          <div className="invalidPlan">
+            <div className="containerMessage">
+              <p>The 7-day diet plan could not be prepared. Please enter another set of values</p>
+              <button onClick={() => navigation("/")}>Accept</button>
+            </div>
+          </div>
          :
         <div>
           <h1 className="titlePlan">7 days Diet Plan</h1>
