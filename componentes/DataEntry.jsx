@@ -14,23 +14,19 @@ const[dietHealth, setDietHealth] = useState()
 const[allergiesCare, setAllergiesCare] = useState([])
 const navigate = useNavigate()
 
-const fetchData = async (kcMin,
-  kcMax,
-  kMinBr,
-  kMaxBr,
-  kcMinLunch,
-  kcMaxLunch,
-  kcMinDin,
-  kcMaxDin,diet,allergy) => {
+const fetchData = async (params) => {
   try {
-      const data = await planResult(kcMin,
-        kcMax,
-        kMinBr,
-        kMaxBr,
-        kcMinLunch,
-        kcMaxLunch,
-        kcMinDin,
-        kcMaxDin,diet,allergy)
+      const data = await planResult(
+        params.kcMin,
+        params.kcMax,
+        params.kMinBr,
+        params.kMaxBr,
+        params.kcMinLunch,
+        params.kcMaxLunch,
+        params.kcMinDin,
+        params.kcMaxDin,
+        params.diet,
+        params.allergy)
       const mealsRecipeID = data.selection.map(valor => {
       const breakfast = valor.sections.Breakfast.assigned.split("#")[1]
       const lunch = valor.sections.Lunch.assigned.split("#")[1]
@@ -45,21 +41,28 @@ const fetchData = async (kcMin,
 const handleSubmit = (e) =>{
   e.preventDefault() 
       const IMC = (peso) / (altura/100)**2
+      let params = {}
   if (IMC < 18.5) {
-    fetchData(1600,2000,160,600,480,900,320,900,dietHealth,allergiesCare)
+    params = {kcMin: 1600, kcMax: 2000, kMinBr: 160, kMaxBr: 600, kcMinLunch: 480, 
+    kcMaxLunch: 900, kcMinDin: 320, kcMaxDin: 900, diet: dietHealth, allergy: allergiesCare}
   }else if(IMC >= 18.5 && IMC < 25){
-    fetchData(1400,1800,140,540,420,810,280,810,dietHealth,allergiesCare)
+    params = {kcMin: 1400, kcMax: 1800, kMinBr: 140, kMaxBr: 540, kcMinLunch: 420, 
+      kcMaxLunch: 810, kcMinDin: 280, kcMaxDin: 810, diet: dietHealth, allergy: allergiesCare}
   }else if(IMC >= 25 && IMC < 30){
-    fetchData(1200,1600,120,480,360,720,240,720,dietHealth,allergiesCare)
+    params = {kcMin: 1200, kcMax: 1600, kMinBr: 120, kMaxBr: 480, kcMinLunch: 360, 
+      kcMaxLunch: 720, kcMinDin: 240, kcMaxDin: 720, diet: dietHealth, allergy: allergiesCare}
   }else if(IMC >= 30 && IMC < 35){
-    fetchData(1000,1400,100,420,300,630,200,630,dietHealth,allergiesCare)
+    params = {kcMin: 1000, kcMax: 1400, kMinBr: 100, kMaxBr: 420, kcMinLunch: 300, 
+      kcMaxLunch: 630, kcMinDin: 200, kcMaxDin: 630, diet: dietHealth, allergy: allergiesCare}
   }else if(IMC >= 35 && IMC < 40){
-    fetchData(800,1200,80,360,240,540,160,540,dietHealth,allergiesCare)
+    params = {kcMin: 800, kcMax: 1200, kMinBr: 80, kMaxBr: 360, kcMinLunch: 240, 
+      kcMaxLunch: 540, kcMinDin: 160, kcMaxDin: 540, diet: dietHealth, allergy: allergiesCare}
   }else{
-    fetchData(400,1000,40,300,120,450,80,450,dietHealth,allergiesCare)
+    params = {kcMin: 400, kcMax: 1000, kMinBr: 40, kMaxBr: 300, kcMinLunch: 120, 
+      kcMaxLunch: 450, kcMinDin: 80, kcMaxDin: 450, diet: dietHealth, allergy: allergiesCare}
   }
   navigate("/plan")
-    
+  fetchData(params)
   }
   
  const handleChangeDiet =  (e) =>{
@@ -92,9 +95,6 @@ const handleSubmit = (e) =>{
       setAllergiesCare(allergy)
   },[checkedIDAllergies])
 
-
-console.log(peso)
-console.log(altura)
 console.log(checkedIDDiet)
 console.log(checkedIDAllergies)
 console.log(dietHealth)

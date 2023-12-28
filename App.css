@@ -51,6 +51,12 @@ input[type="text"], input[type="number"]{
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
 }
+
+.nutrition{
+  display: flex;
+  justify-content: space-between;
+ 
+}
 .nutList li::before {
     content: "•"; /* Esto agrega un nuevo 'punto' antes de cada elemento <li> */
     color: red; /* Cambia 'red' al color que prefieras */
@@ -59,11 +65,7 @@ input[type="text"], input[type="number"]{
     margin-left: -1em; /* Esto mueve el 'punto' a la izquierda para alinearlo con los puntos originales */
   }
 
-  .nutrition{
-    display: flex;
-    justify-content: space-between;
-   
-  }
+
 
   .cardTitle{
     color: #FB5849;
@@ -89,8 +91,6 @@ input[type="text"], input[type="number"]{
     text-align: center;
     font-weight: bold ;
   }
-
-
 
 .containerMeal{
   display: flex;
