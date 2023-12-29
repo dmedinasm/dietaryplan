@@ -3,7 +3,7 @@ import { Context } from '../context/Context'
 import {useNavigate} from 'react-router-dom'
 import { dietType, allergies } from '../data/data'
 import { planResult } from '../fetch/fetch'
-
+import Toastify from 'toastify-js'
 const DataEntry = () => {
 const[peso, setPeso] = useState(0)
 const[altura, setAltura] = useState(0)
@@ -40,29 +40,42 @@ const fetchData = async (params) => {
 };
 const handleSubmit = (e) =>{
   e.preventDefault() 
-      const IMC = (peso) / (altura/100)**2
-      let params = {}
-  if (IMC < 18.5) {
-    params = {kcMin: 1600, kcMax: 2000, kMinBr: 160, kMaxBr: 600, kcMinLunch: 480, 
-    kcMaxLunch: 900, kcMinDin: 320, kcMaxDin: 900, diet: dietHealth, allergy: allergiesCare}
-  }else if(IMC >= 18.5 && IMC < 25){
-    params = {kcMin: 1400, kcMax: 1800, kMinBr: 140, kMaxBr: 540, kcMinLunch: 420, 
-      kcMaxLunch: 810, kcMinDin: 280, kcMaxDin: 810, diet: dietHealth, allergy: allergiesCare}
-  }else if(IMC >= 25 && IMC < 30){
-    params = {kcMin: 1200, kcMax: 1600, kMinBr: 120, kMaxBr: 480, kcMinLunch: 360, 
-      kcMaxLunch: 720, kcMinDin: 240, kcMaxDin: 720, diet: dietHealth, allergy: allergiesCare}
-  }else if(IMC >= 30 && IMC < 35){
-    params = {kcMin: 1000, kcMax: 1400, kMinBr: 100, kMaxBr: 420, kcMinLunch: 300, 
-      kcMaxLunch: 630, kcMinDin: 200, kcMaxDin: 630, diet: dietHealth, allergy: allergiesCare}
-  }else if(IMC >= 35 && IMC < 40){
-    params = {kcMin: 800, kcMax: 1200, kMinBr: 80, kMaxBr: 360, kcMinLunch: 240, 
-      kcMaxLunch: 540, kcMinDin: 160, kcMaxDin: 540, diet: dietHealth, allergy: allergiesCare}
+  if (/^[0-9]*$/.test(peso) && /^[0-9]*$/.test(altura) ){
+    const IMC = (peso) / (altura/100)**2
+    let params = {}
+if (IMC < 18.5) {
+  params = {kcMin: 1600, kcMax: 2000, kMinBr: 160, kMaxBr: 600, kcMinLunch: 480, 
+  kcMaxLunch: 900, kcMinDin: 320, kcMaxDin: 900, diet: dietHealth, allergy: allergiesCare}
+}else if(IMC >= 18.5 && IMC < 25){
+  params = {kcMin: 1400, kcMax: 1800, kMinBr: 140, kMaxBr: 540, kcMinLunch: 420, 
+    kcMaxLunch: 810, kcMinDin: 280, kcMaxDin: 810, diet: dietHealth, allergy: allergiesCare}
+}else if(IMC >= 25 && IMC < 30){
+  params = {kcMin: 1200, kcMax: 1600, kMinBr: 120, kMaxBr: 480, kcMinLunch: 360, 
+    kcMaxLunch: 720, kcMinDin: 240, kcMaxDin: 720, diet: dietHealth, allergy: allergiesCare}
+}else if(IMC >= 30 && IMC < 35){
+  params = {kcMin: 1000, kcMax: 1400, kMinBr: 100, kMaxBr: 420, kcMinLunch: 300, 
+    kcMaxLunch: 630, kcMinDin: 200, kcMaxDin: 630, diet: dietHealth, allergy: allergiesCare}
+}else if(IMC >= 35 && IMC < 40){
+  params = {kcMin: 800, kcMax: 1200, kMinBr: 80, kMaxBr: 360, kcMinLunch: 240, 
+    kcMaxLunch: 540, kcMinDin: 160, kcMaxDin: 540, diet: dietHealth, allergy: allergiesCare}
+}else{
+  params = {kcMin: 400, kcMax: 1000, kMinBr: 40, kMaxBr: 300, kcMinLunch: 120, 
+    kcMaxLunch: 450, kcMinDin: 80, kcMaxDin: 450, diet: dietHealth, allergy: allergiesCare}
+}
+navigate("/plan")
+fetchData(params)
   }else{
-    params = {kcMin: 400, kcMax: 1000, kMinBr: 40, kMaxBr: 300, kcMinLunch: 120, 
-      kcMaxLunch: 450, kcMinDin: 80, kcMaxDin: 450, diet: dietHealth, allergy: allergiesCare}
+    Toastify({
+      text: "Invalid value, enter values ​​between 0 and 9",
+      className: "info",
+      position: "center",
+      style: {
+          background: "#FB6356",
+          color: "white",
+      }
+  }).showToast();
   }
-  navigate("/plan")
-  fetchData(params)
+
   }
   
  const handleChangeDiet =  (e) =>{
@@ -105,13 +118,13 @@ console.log(allergiesCare)
       <form onSubmit={handleSubmit}>
         <h5>PERSONAL INFORMATION FOR DIETARY PLAN</h5>
         <div className="mainValues">
-          <div>
+          <div className="weight">
             <label htmlFor="weight">weigth(kg):</label>
             <input type="number" id="weight" onChange={(e) => setPeso(e.target.value)} required></input>
           </div>
-          <div>
-          <label htmlFor="height">height(cm):</label>
-          <input type="number" id="height" onChange={(e) => setAltura(e.target.value)} required></input>
+          <div className="height">
+            <label htmlFor="height">height(cm):</label>
+            <input type="number" id="height" onChange={(e) => setAltura(e.target.value)} required></input>
           </div>
           
         </div>

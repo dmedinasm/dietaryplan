@@ -56,7 +56,7 @@ const Plan = () => {
           </div>
          :
         <div>
-          <h1 className="titlePlan">7 days Diet Plan</h1>
+          <h1 className="titlePlan">7 days diet plan</h1>
           <div className="containerPlan">
             <div className="labelBr">Breakfast</div>
             <div className="labelLunch">Lunch</div>

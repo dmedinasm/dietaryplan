@@ -30,7 +30,7 @@ https://templatemo.com/tm-558-klassy-cafe
 
     <link rel="stylesheet" href="assets/css/lightbox.css">
     <link rel="stylesheet" href="./index.css">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     </head>
     
     <body>
@@ -63,14 +63,9 @@ https://templatemo.com/tm-558-klassy-cafe
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
-                          <li class="scroll-to-section"><a href="#top" class="active"><div class="home">Home</div></a></li>
-                          <li class="scroll-to-section"><a href="#app"><div class="planNav">Get a Dietary Plan!</div></a></li>
-                           
-               
-                          <li class="scroll-to-section"><a href="#menu">Feedback us</a></li>
-                          
-                         
-                          <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
+                          <li class="scroll-to-section"><a href="#"><div class="home active">Home</div></a></li>
+                          <li class="scroll-to-section"><a href="#"><div class="planNav active">Get a Dietary Plan!</div></a></li>
+                          <li class="scroll-to-section"><a href="#"><div class="contactForm active">Feedback us</div></a></li>
                         
                       </ul>        
                       <a class='menu-trigger'>
@@ -132,6 +127,28 @@ https://templatemo.com/tm-558-klassy-cafe
   </div>
   
   <!-- ***** Main Banner Area End ***** -->
+
+  <!--*****Contact Form Start*****-->
+<div class="contact hidden">
+    
+<form id="formContact">
+    <h3>CONTACT US</h3>
+    <div>
+        <label for="name">Name:</label>
+        <input id="name" type="text" name="name" />
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" />
+    </div>
+    <div class="messageArea" >
+        <label for="message">Message:</label>
+        <textarea id="message" type="text" name="message"></textarea>
+    </div>
+    <input type="submit" value="submit">
+</form>
+</div>
+  <!--*****Contact Form End*****-->
 
   <!-- ***** Planner App ***** --> 
   <div id="app" class="hiddenApp"></div>
@@ -206,4 +223,41 @@ https://templatemo.com/tm-558-klassy-cafe
   </body>
   <script type="module" src="./main.jsx"></script>
   <script type="module" src="./index.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+<script type="text/javascript">
+    (function () {
+        emailjs.init("-4_1XVLTXkBSvoCAq");
+    })();
+    document.getElementById('formContact').addEventListener('submit', function (event) {
+        event.preventDefault();
+        emailjs.sendForm('service_3tfinni', 'template_l3humk9', '#formContact')
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+                Toastify({
+                    text: "Message succesfully sended",
+                    className: "info",
+                    position: "center",
+                    style: {
+                        background: "#FB6356",
+                        color: "white",
+                    }
+                }).showToast();
+            }, function (error) {
+                console.log('FAILED...', error);
+                Toastify({
+                    text: "Error sending message, Try Again",
+                    className: "info",
+                    position: "center",
+                    style: {
+                        background: "#FB6356",
+                        color: "white",
+                    }
+                }).showToast();
+            })
+    })
+
+</script>
 </html>
