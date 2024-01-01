@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/Context'
-import Meal from './Meal'
 import { useNavigate } from 'react-router-dom'
 import { Grid } from 'react-loader-spinner'
 import { mealsData } from '../fetch/fetch'
+import { days } from '../data/data'
+import DayPlan from './DayPlan'
 const Plan = () => {
   const { mealsId } = useContext(Context)
   const [mealsRendered, setMealsRendered] = useState([])
@@ -58,25 +59,10 @@ const Plan = () => {
         <div>
           <h1 className="titlePlan">7 days diet plan</h1>
           <div className="containerPlan">
-            <div className="labelBr">Breakfast</div>
-            <div className="labelLunch">Lunch</div>
-            <div className="labelDinner">Dinner</div>
-            <div className="iconBr"><img src="./assets/images/tab-icon-02.png" alt="iconBr" /></div>
-            <div className="iconLunch"><img src="./assets/images/tab-icon-01.png" alt="iconLunch" /></div>
-            <div className="iconDinner"><img src="./assets/images/tab-icon-03.png" alt="iconDinner" /></div>
 
             {
-              mealsRendered.map((valor, i) =>
-                <Meal
-                  key={i}
-                  title={valor.recipe.label}
-                  image={valor.recipe.images.SMALL.url}
-                  kcal={Math.floor(valor.recipe.totalNutrients.ENERC_KCAL.quantity)}
-                  carb={Math.floor(valor.recipe.totalNutrients.CHOCDF.quantity)}
-                  fat={Math.floor(valor.recipe.totalNutrients.FAT.quantity)}
-                  protein={Math.floor(valor.recipe.totalNutrients.PROCNT.quantity)}
-                  link={valor.recipe.url}
-                />
+              days.map((valor, index) => 
+              <DayPlan key={index} day={valor} dataMeal={mealsRendered.slice(index * 3, index * 3 + 3)} />
               )
             }
           </div>

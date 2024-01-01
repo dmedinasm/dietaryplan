@@ -1,3 +1,5 @@
+export const days =[1, 2, 3, 4, 5, 6 ,7]
+
 export const dietType = [
     { id: "hProtein", data: "HIGH_PROTEIN", name:"high-protein" },
     { id: "balanced", data: "BALANCED", name:"balanced" },
