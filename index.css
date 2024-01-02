@@ -54,7 +54,6 @@
 }
 
 .contact form{
-    display: flex;
     gap: 20px;
     height: 100vh;
     justify-content: center;
@@ -71,12 +70,17 @@
     outline:none;
     width: 300px;
     height: 20vh;
+    resize: none;
 }
 
 .contact form h3{
     color: #FB6356;
 }
 
+.inputArea{
+  display: flex;
+  align-items: baseline;
+}
 .messageArea{
     display: flex;
     align-items: baseline;
@@ -106,9 +110,7 @@ input {
   width: 100px;
   text-align: center;
 }
-textarea{
-  resize: none;
-}
+
 
 input:focus, textarea {
   outline: none; 
@@ -161,11 +163,10 @@ input[type="number"] {
 .dayContainer{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr; 
-  grid-template-rows: 1fr 1fr 1fr; 
+  grid-template-rows: 1fr; 
   gap: 8px; 
   grid-template-areas: 
     "day day day"
-    ". . ."
     ". . .";
 }
 .day { 
@@ -315,3 +316,61 @@ input[type="number"] {
   border-radius: 20px;
   justify-content: space-between; 
 }
+
+
+@media (max-width: 599px){
+  .dayContainer{
+    display: grid;
+    grid-template-columns: 1fr ; 
+    grid-template-rows: 1fr ; 
+    gap: 8px; 
+    grid-template-areas: 
+      "day"
+      ".";
+  }
+}
+  @media(min-width: 600px) and (max-width: 900px){
+    .dayContainer{
+      display: grid;
+      grid-template-columns: 1fr 1fr; 
+      grid-template-rows: 1fr; 
+      gap: 8px; 
+      grid-template-areas: 
+        "day day"
+        ". . ";
+    }
+  }
+
+  @media(max-width: 608px) {
+    .inputArea{
+      flex-direction: column;
+      
+    }
+  .messageArea{
+    flex-direction: column;
+  }
+  }
+
+  @media(max-width: 768px) {
+
+    .mainValues{
+      flex-direction: column;
+    }
+    .checkboxes{
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 500px){
+    .logoMain{
+      display: none;
+    }
+    .btnDiet{
+      padding: 10px;
+      font-size: 0.8em;
+    }
+    .inner-content h4{
+      font-weight:100px;
+    }
+  }
+

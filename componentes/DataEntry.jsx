@@ -27,6 +27,7 @@ const fetchData = async (params) => {
         params.kcMaxDin,
         params.diet,
         params.allergy)
+        
       const mealsRecipeID = data.selection.map(valor => {
       const breakfast = valor.sections.Breakfast.assigned.split("#")[1]
       const lunch = valor.sections.Lunch.assigned.split("#")[1]
@@ -126,7 +127,6 @@ console.log(allergiesCare)
             <label htmlFor="height">height(cm):</label>
             <input type="number" id="height" onChange={(e) => setAltura(e.target.value)} required></input>
           </div>
-          
         </div>
         <div className="checkboxes">
           <div className="dietHealth">
