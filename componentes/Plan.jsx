@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/Context'
 import { useNavigate } from 'react-router-dom'
 import { Grid } from 'react-loader-spinner'
-import { mealsData } from '../fetch/fetch'
+import { getMealsData } from '../fetch/mealsData'
 import { days } from '../data/data'
 import DayPlan from './DayPlan'
 const Plan = () => {
@@ -11,16 +11,14 @@ const Plan = () => {
   const[cargando, setCargando] = useState(true)
   const navigation = useNavigate()
   console.log(mealsId)
-
-  useEffect(() => {
-    setMealsRendered([])
-  }, [mealsId]);
  
-  //Array de promesas paraque lleguen en orden
+  //Array de promesas para que lleguen en orden
   useEffect(() => {
-    Promise.all(mealsId.map(mealsData))
+    if (!mealsId) return
+    Promise.all(mealsId.map(getMealsData))
       .then(dataArray => setMealsRendered(dataArray));
   }, [mealsId]);
+
   useEffect(() =>{
     setTimeout(() => {
       setCargando(false);
@@ -31,8 +29,7 @@ const Plan = () => {
   console.log(mealsId)
   console.log(mealsRendered)
   return (
-    <>
-          
+    <>  
         {cargando ?
            <div className="loader">
            <Grid
