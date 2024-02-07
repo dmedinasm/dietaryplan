@@ -3,12 +3,13 @@ import { Context } from '../context/Context'
 import { useNavigate } from 'react-router-dom'
 import { Grid } from 'react-loader-spinner'
 import { getMealsData } from '../fetch/mealsData'
-import { days } from '../data/data'
+import { days } from '../data/days'
 import DayPlan from './DayPlan'
+import { useLoader } from '../hooks/useLoader'
 const Plan = () => {
+  const loading = useLoader()
   const { mealsId } = useContext(Context)
   const [mealsRendered, setMealsRendered] = useState([])
-  const[cargando, setCargando] = useState(true)
   const navigation = useNavigate()
   console.log(mealsId)
  
@@ -19,18 +20,9 @@ const Plan = () => {
       .then(dataArray => setMealsRendered(dataArray));
   }, [mealsId]);
 
-  useEffect(() =>{
-    setTimeout(() => {
-      setCargando(false);
-    }, 8000)
-  },[mealsRendered])
-  
- 
-  console.log(mealsId)
-  console.log(mealsRendered)
   return (
     <>  
-        {cargando ?
+        {loading ?
            <div className="loader">
            <Grid
              visible={true}

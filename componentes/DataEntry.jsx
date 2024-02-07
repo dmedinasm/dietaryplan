@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../context/Context'
-import { getDietKCal } from '../data/data'
+import { getDietKCal } from '../data/dietKCal'
 import {useNavigate} from 'react-router-dom'
-import { dietType, allergies } from '../data/data'
+import { allergies } from '../data/allergies'
+import { dietType } from '../data/dietType'
 import { getPlanData } from '../fetch/planResult'
 import Toastify from 'toastify-js'
 const DataEntry = () => {
